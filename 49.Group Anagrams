@@ -1,0 +1,19 @@
+原题如下：
+Given an array of strings, return all groups of strings that are anagrams.
+
+Note: All inputs will be in lower-case.
+
+For example:
+
+Input:　　["tea","and","ate","eat","den"]
+
+Output:   ["tea","ate","eat"]
+Anagram（回文构词法）是指由颠倒字母顺序组成的单词。
+其有一个特点：单词里的字母的种类和数目没有改变，只是改变了字母的排列顺序。
+思路如下：
+首先选用map<string,int>作为记录每一个字符串出现的首位置
+1：从strs的第一个元素开始遍历，对每一个strs进行排序得到s串；
+2：在map中查找s；
+3. 若不存在，将s以及该元素的下标存入map<string ,int>；
+4. 若存在，首先将第一次出现s时的原始字符串存入结果solution，即strs[map[s]]，并将map[s]设置为-1（防止下次再存），再将该字符串本身存入结果solution；
+5. 重复以上1-4步，直到遍历结束。
