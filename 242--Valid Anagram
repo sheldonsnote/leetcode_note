@@ -1,0 +1,22 @@
+原题如下：
+Given two strings s and t, write a function to determine if t is an anagram of s.
+
+For example,
+s = "anagram", t = "nagaram", return true.
+s = "rat", t = "car", return false.
+
+Note:
+You may assume the string contains only lowercase alphabets.
+思路如下：
+这题水题，两种思路。
+1：排序，比较两个字符串是否相同。
+2：开一个数组或者用map<string,int>存，记录每个字符出现次数，比较次数。
+代码如下：
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        sort(s.begin(),s.end());
+        sort(t.begin(),t.end());
+        return s==t;
+    }
+};
