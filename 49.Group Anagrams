@@ -17,3 +17,30 @@ Anagram（回文构词法）是指由颠倒字母顺序组成的单词。
 3. 若不存在，将s以及该元素的下标存入map<string ,int>；
 4. 若存在，首先将第一次出现s时的原始字符串存入结果solution，即strs[map[s]]，并将map[s]设置为-1（防止下次再存），再将该字符串本身存入结果solution；
 5. 重复以上1-4步，直到遍历结束。
+代码如下：
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        string s;
+        map<string,int>anagram;
+        vector<string>ss;
+        for(int i = 0; i < strs.size(); i++)
+        {
+            s = strs[i];
+            sort(s.begin(),s.end());
+            if(anagram.find(s) == anagram.end())
+            {
+                anagram[s] = i;
+            }
+            else {
+                if(anagram[s]>=0)
+                {
+                    ss.push_back(strs[anagram[s]]);
+                    anagram[s] = -1;
+                }
+                ss.push_back(strs[i]);
+            }
+        }
+        return ss;
+    }
+};
