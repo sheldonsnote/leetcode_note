@@ -1,0 +1,27 @@
+原题如下：
+Ugly Number My Submissions Question Solution 
+Total Accepted: 14550 Total Submissions: 46721 Difficulty: Easy
+Write a program to check whether a given number is an ugly number.
+
+Ugly numbers are positive numbers whose prime factors only include 2, 3, 5. For example, 6, 8 are ugly while 14 is not ugly since it includes another prime factor 7.
+
+Note that 1 is typically treated as an ugly number.
+思路如下：
+这题是要判断一个数是不是"丑数"，即看它的素因子是不是只有2.3.5.如果是丑数，那么它就是若干个2.3.5的乘积。
+之前在杭电上遇到一题也是丑数，不过那题是找第n个丑数，思路就是这题的逆推了，丑数是由若干个2、3、5相乘得到，
+那么用最少个数的2、3、5进行组合就会依次得到所要找的第n个丑数
+这题代码如下
+class Solution {
+public:
+    bool isUgly(int num) {
+        if(num <= 0) return false;
+        if(num == 1) return true;
+        while(num%2 == 0 && num >= 2) num /= 2;
+        while(num%3 == 0 && num >= 3) num /= 3;
+        while(num%5 == 0 && num >= 5) num /= 5;
+        if(num == 1)
+        return true;
+        else return false;
+        
+    }
+};
