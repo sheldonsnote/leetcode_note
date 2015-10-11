@@ -1,0 +1,51 @@
+原题如下：
+Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+
+Example 1:
+
+11110
+11010
+11000
+00000
+Answer: 1
+
+Example 2:
+
+11000
+11000
+00100
+00011
+Answer: 3
+思路如下：
+问题是找出不相邻的陆地，那么可以抽象成判断不连通子图的个数。用深搜或者广搜都可以，
+每次找到一个1就把这里改变为2，然后把周围相连的（上下左右四个方向）格子如果是1的话
+就一块标记成2。遍历图中剩下的1的个数，就是结果。
+代码如下：
+class Solution {
+public:
+    int dfs(int i,int j,vector<vector<char>>& grid)
+    {
+       if(i >= 0 && i < grid.size() && j >= 0 && j < grid[i].size() && grid[i][j] == '1')
+       {
+           grid[i][j] = 2;
+           dfs(i+1,j,grid);
+           dfs(i,j+1,grid);
+           dfs(i-1,j,grid);
+           dfs(i,j-1,grid);
+           return 1;
+       }
+    else return 0;
+    }
+    int numIslands(vector<vector<char>>& grid) {
+        int cnt = 0;
+        for(int i = 0; i < grid.size(); i++)
+        {
+            for(int j = 0; j < grid[i].size(); j++)
+            {
+                if(dfs(i,j,grid))
+                cnt++;
+            }
+        }
+        return cnt;
+    }
+};
