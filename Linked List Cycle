@@ -1,0 +1,29 @@
+原题如下：
+Given a linked list, determine if it has a cycle in it.
+
+Follow up:
+Can you solve it without using extra space?
+思路如下：
+问的是一个链表是不是有环。
+先说方法：
+判断链表是不是有环，用快慢指针！
+slow指针每次走一步，fast指针每次走两步，如果俩指针相遇，说明有环，如果fast = null，无环。
+代码如下：
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+          ListNode *fast,*slow;
+         if(head==NULL) return false;
+         slow=head;
+         fast=head->next;
+        while(fast!=NULL && fast->next!=NULL)
+         {
+             if(slow==fast) return true;
+             slow=slow->next;
+             fast=fast->next->next;
+         }
+         return false;
+    }
+};
+这个朋友写的非常透彻，http://blog.sina.com.cn/s/blog_6f611c300101fs1l.html
+先去上课，回来再分析这个方法。
