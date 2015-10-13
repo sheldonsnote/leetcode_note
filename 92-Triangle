@@ -1,0 +1,31 @@
+Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
+
+For example, given the following triangle
+[
+     [2],
+    [3,4],
+   [6,5,7],
+  [4,1,8,3]
+]
+The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
+
+Note:
+Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle.
+思路如下：
+本题是最最基础的动态规划问题，倒三角问题，只能向正下方或者右下方移动，求最短路。
+既然是动态规划就秉持着逆推的思想，下一个状态都是由当前状态决定的，所以求出每一
+个点对应的最短路径，那么顶点就是所要求的值。
+代码如下：
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& triangle) {
+        for(int i = triangle.size()-2; i >= 0; i--)
+        {
+            for(int j = 0; j < i+1; j++)
+            {
+                triangle[i][j] = min(triangle[i+1][j],triangle[i+1][j+1])+triangle[i][j];
+            }
+        }
+        return triangle[0][0];
+    }
+};
