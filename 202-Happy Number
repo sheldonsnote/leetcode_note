@@ -1,0 +1,47 @@
+题目如下：
+Write an algorithm to determine if a number is "happy".
+
+A happy number is a number defined by the following process: Starting with any positive integer,
+replace the number by the sum of the squares of its digits, and repeat the process until the number 
+equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those 
+numbers for which this process ends in 1 are happy numbers.
+
+Example: 19 is a happy number
+
+12 + 92 = 82
+82 + 22 = 68
+62 + 82 = 100
+12 + 02 + 02 = 1
+
+思路如下：
+题意是给一个数然后判断是不是满足条件的happy。happy数都满足的条件是不断求各个数位的平方和然后最后结果收敛于1。
+否则的话一定就是从某一个点开始循环。
+通过给定的条件可以推断出满足条件的数的平方和数列一定是不可重复的。所以很容易想到用set的数据结构来存储。
+查询logn的时间复杂度，当然用hashset貌似更快一点。。
+代码如下：
+class Solution {
+public:
+    bool isHappy(int n) {
+         if(n < 1)
+         return false;
+         if(n == 1)
+         return true;
+         set<int>s;
+         s.insert(n);
+         while(true)
+         {
+             int temp = 0;
+             while(n)
+             {
+                 temp += (n%10) * (n%10);
+                 n = n/10;
+             }
+             if(temp == 1)
+             return true;
+             if(s.find(temp) != s.end())
+             return false;
+             n = temp;
+             s.insert(temp);
+         }
+    }
+};
