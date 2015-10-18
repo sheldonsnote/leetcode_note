@@ -1,0 +1,54 @@
+原题如下：
+Given a list of non negative integers, arrange them such that they form the largest number.
+For example, given [3, 30, 34, 5, 9], the largest formed number is 9534330.
+Note: The result may be very large, so you need to return a string instead of an integer.
+Credits:
+Special thanks to @ts for adding this problem and creating all test cases.
+
+思路如下：
+给定一个数组，这些数连在一起可以组成一个大数，求能组成最大数。
+如 [3, 30, 34, 5, 9] 能组成的最大数为 9534330。
+由于组成的数可能非常大，用字符串返回。
+关键是理解那个cmp函数，比如3和34，就比一下334跟343的大小。
+还有一点，要考虑都是0的情况，要去前导零。
+java代码如下：
+public class Solution {
+    public String largestNumber(int[] num) {
+		int n = num.length;
+        if (n < 1) return "";
+        
+        //把数组转化为字符串数组
+        String[] strs = new String[n];
+        for (int i = 0; i < n; i++) {
+            strs[i] = String.valueOf(num[i]);
+        }
+        
+        //按照数字在结果中的位置排序
+        Arrays.sort(strs, new Cmp());
+        
+        //把所有字符串拼接在一起
+        String ans = "";
+        for (int i = n - 1; i >= 0; i--) {
+        	ans = ans.concat(strs[i]);
+        }
+        
+        //去掉数字开头的0，如输入[0, 0]
+        int i = 0;
+        while (i < n && ans.charAt(i) == '0') {
+            i++;
+        }
+        if (i == n) return "0";
+        
+        return ans.substring(i);
+    }
+}
+
+//比较方法很简单：如果[a在前b在后]组成的结果大于[b在前a在后]组成的结果，那么a>b。
+class Cmp implements Comparator<String>{
+	@Override
+	public int compare(String a, String b) {
+		String ab = a.concat(b);
+		String ba = b.concat(a);
+		return Integer.parseInt(ab) - Integer.parseInt(ba);
+	}
+}
