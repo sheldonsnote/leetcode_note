@@ -1,0 +1,39 @@
+原题如下：
+Each number in C may only be used once in the combination.
+
+Note:
+All numbers (including target) will be positive integers.
+Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).
+The solution set must not contain duplicate combinations.
+For example, given candidate set 10,1,2,7,6,1,5 and target 8, 
+A solution set is: 
+[1, 7] 
+[1, 2, 5] 
+[2, 6] 
+[1, 1, 6] 
+思路如下：
+题目意思是从给的一个数组中找出和为给定值的组合方式，每个数字只可以用一次，然后输出的时候要按照升序输出！
+这个题目就是一道基础的搜索题，算是一道深搜模板题吧。只要注意一下细节就行！我就是因为开始的时候没有排序结果wa了一次。。
+代码如下：
+class Solution {
+public:
+    void find(vector<int> &a,int sum,int size,int target,vector<int> &temp,vector<vector<int>> &res)
+    {
+        for(int i = size; i < a.size(); i++)
+        {
+            temp.push_back(a[i]);
+            if(a[i]+sum == target) res.push_back(temp);
+            if(a[i]+sum < target && i < a.size()-1) find(a,sum+a[i],i+1,target,temp,res);
+            temp.pop_back();
+            while(i < a.size() && a[i] == a[i+1])
+            i++;
+        }
+    }
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<int> temp;
+        vector<vector<int>> res;
+        sort(candidates.begin(),candidates.end());
+        find(candidates,0,0,target,temp,res);
+        return res;
+    }
+};
