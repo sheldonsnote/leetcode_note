@@ -1,0 +1,82 @@
+原题如下：
+Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
+
+    For example, given array S = {-1 2 1 -4}, and target = 1.
+
+    The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+Subscribe to see which companies asked this question
+思路如下：
+找最接近的和，暴力枚举没种可能的情况，然后记录最接近的值，即和与目标值进行绝对值差之后的结果。
+在枚举的时候一点技巧，比如1，2，3，4，5，6。这组数据，先对这组数据排序，然后num[1]+ （ num[2] + num[6]），然后
+后续下表依次靠近，找完num[1]之后，在搜以num[2]为第一个元素的时候，则计算num[2]+ (num[3]+num[6]),不需要再管前面
+的num[1],避免造成暴力的重复。
+代码如下：
+（java）
+public class Solution {
+    /*public int threeSumClosest(int[] nums, int target) {
+         int rez = 0;
+        if(nums.length == 0) return 0;
+        else if(nums.length == 1) return nums[0];
+        else if(nums.length == 2) return (nums[0]+nums[1]);
+        else 
+        {
+            int min = Integer.MAX_VALUE;
+            Arrays.sort(nums);
+            int k = nums.length-1;
+          
+            for(int i = 0; i < nums.length; i++)
+            {
+                for(int j = i+1; j < k;)
+                {
+                    int sum = nums[i]+nums[j]+nums[k];
+                    int temp = Math.abs(sum-target);
+                    if(temp == 0)
+                    return sum;
+                    else 
+                    {
+                        if(temp < min)
+                        {
+                            min = temp;
+                            rez = sum;
+                        }
+                        if(sum <= target)
+                            j++;
+                        if(sum > target)
+                            k--;
+                    }
+                }
+            }
+            return rez;
+        }
+    }
+}*///不造为毛这段代码会wa。。然后我觉得跟标程明明差不多。。
+public int threeSumClosest(int[] nums, int target) {
+    int min = Integer.MAX_VALUE;
+	int result = 0;
+ 
+	Arrays.sort(nums);
+ 
+	for (int i = 0; i < nums.length; i++) {
+		int j = i + 1;
+		int k = nums.length - 1;
+		while (j < k) {
+			int sum = nums[i] + nums[j] + nums[k];
+			int diff = Math.abs(sum - target);
+ 
+			if(diff == 0) return sum;
+ 
+			if (diff < min) {
+				min = diff;
+				result = sum;
+			}
+			if (sum <= target) {
+				j++;
+			} else {
+				k--;
+			}
+		}
+	}
+ 
+	return result;
+}
+}
