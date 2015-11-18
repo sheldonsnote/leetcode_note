@@ -1,0 +1,24 @@
+原题如下：
+Find the total area covered by two rectilinear rectangles in a 2D plane.
+
+Each rectangle is defined by its bottom left corner and top right corner as shown in the figure.
+
+Rectangle Area
+脑补一张两个矩形重叠一部分的画面（图片不造怎么上传。。）
+（A,B）(C,D)(E,F)(G,H)分别表示这两个矩形的右上和左下的坐标。
+Assume that the total area is never beyond the maximum possible value of int.
+
+Credits:
+Special thanks to @mithmatt for adding this problem, creating the above image and all test cases.
+思路如下：
+数学题，求得是矩形覆盖面积，只要求出总和再减去重叠部分，注意不相交的情况。（开始把题目看成了求重叠部分Orz..）
+代码如下：
+（java）
+public class Solution {
+    public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+       int sum = (C-A)*(D-B) + (G-E)*(H-F);
+       int a1 = Math.max(A,E),b1 = Math.max(B,F),c1 = Math.min(C,G),d1 = Math.min(D,H);
+       if(a1 >= c1 || b1 >= d1) return sum;
+       else return sum-(c1-a1)*(d1-b1);
+    }
+}
