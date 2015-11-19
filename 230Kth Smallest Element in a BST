@@ -1,0 +1,38 @@
+原题如下：
+Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
+
+Note: 
+You may assume k is always valid, 1 ≤ k ≤ BST's total elements.
+思路如下：
+在二叉排序树中找出第k小的数就是一个遍历问题，中序遍历的结果刚好是一个有序的数列，所以我们可以借助栈来对这个二叉树
+进行遍历与元素的记录。代码的核心部分就是如何中序遍历一颗二叉树了。
+代码如下：
+（java）
+public class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        Stack<TreeNode> p = new Stack<>();
+        TreeNode n = root;
+        while(n.left != null)
+        {
+            p.push(n);
+            n = n.left;
+        }
+        while(k > 0 && (n != null || !p.isEmpty()))
+        {
+            if(n == null)
+            {
+                n = p.pop();
+                k--;
+                if(k == 0)
+                return n.val;
+                else n = n.right;
+            }
+            else{
+                p.push(n);
+                n = n.left;
+            }
+        }
+        return n.val;
+    }
+    
+}
