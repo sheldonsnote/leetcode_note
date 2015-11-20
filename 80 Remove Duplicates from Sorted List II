@@ -1,0 +1,44 @@
+原题如下：
+Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original
+list.
+
+For example,
+Given 1->2->3->3->4->4->5, return 1->2->5.
+Given 1->1->1->2->3, return 2->3.
+总结如下：
+此题感觉较好的理解链表的结构，在笔记本上画图最能帮助理解。题意是消除一个有序链表中的相同节点，如1->1，则结果为[]。
+头结点也可能是重复的所以要创建一个Head节点来指向头结点，然后用pre跟now节点去判断是否相同，并用now节点去删除相同节点。
+若now节点与now.next节点相同，则在移动now节点删除next节点的同时要注意标记一下now节点，然后再把当前now节点删除！
+重复上述删除过程之后，再移动pre节点使之与now节点链接，保证链表的完整性。
+代码如下：
+（java）
+public class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null || head.next == null) return head;
+        ListNode pre,now,Head;
+        Head = new ListNode (-1);
+        Head.next = head;
+        pre = Head;
+        now = head;
+        while(now!= null)
+        {
+            boolean flag = false;
+            while(now.next!=null && now.val == now.next.val)
+            {
+                flag = true;
+                now = now.next;
+            }
+            if(flag)
+            {
+                now = now.next;
+                continue;//pay attention!
+            }
+            pre.next = now;
+            pre = pre.next;
+            now = now.next;
+        }
+        pre.next = now; 
+        head = Head.next;
+        return head;
+    }
+}
