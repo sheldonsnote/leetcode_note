@@ -1,0 +1,39 @@
+原题如下:
+Given an array of numbers nums, in which exactly two elements appear only once and all the other elements appear exactly twice.
+Find the two elements that appear only once.
+
+For example:
+
+Given nums = [1, 2, 1, 3, 2, 5], return [3, 5].
+思路如下:
+一个数组，有两个元素出现了一次，其余元素都出现两次，让用线性时间复杂度和常量空间复杂度找出这两个数。
+考虑位操作，对所有元素做异或操作，那么最后得到的值就是要求的两个元素异或得到的，那么找出其中为1的某一位，
+说明这一位两个数一个为0，一个为1，以这一位为标准，把数组的元素分为两组A、B，那么要求的两个元素肯定是一个
+在A组，一个在B组，而对这两组各自做异或操作，就可以得到两个数就是要求的。
+同时,我们可以确定的是 第n位的数肯定为1!
+然后 第n位二进制数的表示n&(~(n-1))
+代码如下:
+public class Solution {
+    public int[] singleNumber(int[] nums) {
+        int res = 0;
+        int[] a = {0,0};
+        for(int i = 0; i < nums.length; i++)
+        {
+            res ^= nums[i];
+        }
+        int temp = res&(~(res-1));
+        //System.out.print(temp);
+        for(int i =0; i < nums.length; i++)
+        {
+            if((temp&nums[i]) == 0)
+            {
+                a[0] ^= nums[i];
+            }
+            else 
+            {
+                a[1] ^= nums[i];
+            }
+        }
+        return a;
+    }
+}
