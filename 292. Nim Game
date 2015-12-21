@@ -11,6 +11,7 @@ no matter 1, 2, or 3 stones you remove, the last stone will always be removed by
 思路如下:
 一个巴什博弈的题目被分到了尼姆博弈里边..
 总之就是很简单的巴什博弈..
+可以看看我的博客!http://blog.csdn.net/sheldon761642718/article/details/50370260
 代码如下:
 public class Solution {
     public boolean canWinNim(int n) {
