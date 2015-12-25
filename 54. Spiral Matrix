@@ -1,0 +1,64 @@
+原题如下:
+Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.
+
+For example,
+Given the following matrix:
+
+[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+You should return [1,2,3,6,9,8,7,4,5].
+思路如下:
+返回一个螺旋矩阵,即是我们所说的蛇形矩阵,考验的就是矩阵的输入输出了
+这次用C++写的,明天补上java代码
+代码如下:
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        if (matrix.empty())
+            return vector<int>();
+
+        vector<int> ret;
+
+        //输入矩阵行数
+        int m = matrix.size() - 1;
+
+        //输入矩阵的列数
+        int n = matrix[0].size() - 1;
+
+        for (int x = 0, y = 0; x <= m && y <= n; x++, y++)
+        {
+            //输出矩阵首行
+            for(int j=y ; j<=n ; ++j)
+            {
+                ret.push_back(matrix[x][j]);
+            }//while
+
+
+            //输出矩阵最右列
+            for (int i = x + 1; i <= m; ++i)
+            {
+                ret.push_back(matrix[i][n]);
+            }//while
+
+            //输出矩阵最底行
+            for (int j = n - 1; j >= y && x != m; --j)
+            {
+                ret.push_back(matrix[m][j]);
+            }
+
+            //输出矩阵最左列
+            for (int i = m - 1; i > x && y != n; --i)
+            {
+                ret.push_back(matrix[i][y]);
+            }
+
+            m--;
+            n--;
+        }//for
+
+        return ret;
+    }
+};
