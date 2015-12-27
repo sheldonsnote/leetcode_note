@@ -1,0 +1,57 @@
+原题如下:
+Given a complete binary tree, count the number of nodes.
+
+Definition of a complete binary tree from Wikipedia:
+In a complete binary tree every level, except possibly the last, is completely filled, 
+and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.
+思路如下:
+求完全二叉树的节点个数:
+用暴力递归实在太慢了根本没有考虑,这个如果是一颗满二叉树的话求节点有2^n - 1的公式,
+所以就可以用这个公式将其实完全二叉树的深度求出部分节点,然后剩下的递归求.
+代码如下:
+java(没有指针,都是引用所以root.left,not root->left)
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution 
+{
+    public int countNodes(TreeNode root) 
+    {
+        if(root == null) return 0;
+        int l = getleft(root)+1;
+    //    System.out.pr);intln(l
+        int r = getright(root)+1;
+
+        if(l == r)
+         return (2<<(r-1))-1;
+         else 
+         return countNodes(root.left)+countNodes(root.right)+1;
+    }
+      
+     private int getleft(TreeNode root)
+    {
+         int  count = 0;
+         while(root.left != null)
+         {
+             root = root.left;
+             count++;
+         }
+         return count;
+    }
+    private int getright(TreeNode root)//私有限制可加可不加
+    {
+         int count = 0;
+         while(root.right != null)
+         {
+             root = root.right;
+             count++;
+         }
+         return count;
+    }
+}
